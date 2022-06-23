@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import Modal from "./components/Modal";
 import SingleCard from "./components/SingleCard";
 
 const cardImages = [
@@ -14,6 +15,7 @@ const cardImages = [
 function App() {
   const [cards, setCards] = useState([]);
   const [turns, setTurns] = useState(0);
+  const [showModal, setShowModal] = useState(false);
 
   //user choices state
   const [choiceOne, setChoiceOne] = useState(null);
@@ -40,6 +42,10 @@ function App() {
     setChoiceTwo(null);
     setTurns((prevTurns) => prevTurns + 1);
     setDisabled(false);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
   //State changes
@@ -73,10 +79,22 @@ function App() {
     shuffleCards();
   }, []);
 
+  // Check if user won the game
+  useEffect(() => {
+    if (cards.length > 0) {
+      let isGameFinished = cards.every((card) => card.matched === true);
+      if (isGameFinished) {
+        setTimeout(() => setShowModal(true), 800);
+      }
+    }
+  }, [cards]);
+
   return (
     <div className="App">
       <h1>Magic Memory Game</h1>
-      <button onClick={shuffleCards}>New Game</button>
+      <button className="new-game-btn" onClick={shuffleCards}>
+        New Game
+      </button>
       <div className="card-grid">
         {cards.map((card) => (
           <SingleCard
@@ -90,6 +108,8 @@ function App() {
       </div>
       <p>No. of turns: {turns}</p>
       <footer>Made by hoaveth.dev (from a udemy course of thenetninja)</footer>
+
+      {showModal && <Modal handleClose={handleCloseModal} />}
     </div>
   );
 }

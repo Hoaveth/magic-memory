@@ -3,7 +3,7 @@
   margin: 40px auto;
 }
 
-button {
+.new-game-btn {
   background: none;
   border: 2px solid #fff;
   padding: 6px 12px;
@@ -14,7 +14,7 @@ button {
   font-size: 1em;
 }
 
-button:hover {
+.new-game-btn:hover {
   background: #c23866;
   color: #fff;
 }
@@ -35,7 +35,6 @@ footer{
   right: 0; 
   margin-left: auto; 
   margin-right: auto; 
-
 }
 
 
